@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"git.sr.ht/~spc/go-log"
-	mqttcli "git.sr.ht/~spc/mqttcli"
+	"git.sr.ht/~spc/mqttcli"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/peterbourgon/ff/v3"
 )
@@ -32,7 +32,7 @@ func main() {
 	}
 	log.SetLevel(logLevel)
 
-	if log.CurrentLevel() >= log.LevelDebug {
+	if _, ok := os.LookupEnv("MQTTDEBUG"); ok {
 		mqtt.DEBUG = log.New(os.Stderr, "[DEBUG] ", log.Flags(), log.CurrentLevel())
 	}
 

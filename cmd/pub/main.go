@@ -33,7 +33,7 @@ func main() {
 	}
 	log.SetLevel(logLevel)
 
-	if log.CurrentLevel() >= log.LevelDebug {
+	if _, ok := os.LookupEnv("MQTTDEBUG"); ok {
 		mqtt.DEBUG = log.New(os.Stderr, "[DEBUG] ", log.Flags(), log.CurrentLevel())
 	}
 
