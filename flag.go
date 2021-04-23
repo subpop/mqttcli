@@ -14,7 +14,7 @@ var (
 	Password string
 	CARoot   string
 	QoS      int
-	LogLevel string
+	Verbose  bool
 	Headers  flagvar.AssignmentsMap
 )
 
@@ -29,7 +29,7 @@ func NewFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 	fs.StringVar(&Password, "password", "", "")
 	fs.StringVar(&CARoot, "ca-root", "", "")
 	fs.IntVar(&QoS, "qos", 0, "")
-	fs.StringVar(&LogLevel, "log-level", "error", "")
+	fs.BoolVar(&Verbose, "verbose", false, "")
 	fs.Var(&Headers, "header", "")
 
 	return fs

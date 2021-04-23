@@ -27,11 +27,9 @@ func main() {
 		os.Exit(2)
 	}
 
-	logLevel, err := log.ParseLevel(mqttcli.LogLevel)
-	if err != nil {
-		log.Fatalf("cannot parse log level: %v", err)
+	if mqttcli.Verbose {
+		log.SetLevel(log.LevelInfo)
 	}
-	log.SetLevel(logLevel)
 
 	if _, ok := os.LookupEnv("MQTTDEBUG"); ok {
 		mqtt.DEBUG = log.New(os.Stderr, "[DEBUG] ", log.Flags(), log.CurrentLevel())
