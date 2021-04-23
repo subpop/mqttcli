@@ -15,8 +15,8 @@ import (
 func main() {
 	fs := mqttcli.NewFlagSet("pub", flag.ExitOnError)
 
-	var message = fs.String("message", "", "")
-	var retained = fs.Bool("retained", false, "")
+	var message = fs.String("message", "", "message payload")
+	var retained = fs.Bool("retained", false, "retain message on the broker")
 
 	if err := ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser)); err != nil {
 		log.Fatalf("failed parse: %v", err)

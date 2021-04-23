@@ -21,16 +21,16 @@ var (
 func NewFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 	fs := flag.NewFlagSet(name, errorHandling)
 
-	_ = fs.String("config", "", "")
-	fs.StringVar(&Broker, "broker", "", "")
-	fs.Var(&Topics, "topic", "")
-	fs.StringVar(&ClientID, "client-id", "", "")
-	fs.StringVar(&Username, "username", "", "")
-	fs.StringVar(&Password, "password", "", "")
-	fs.StringVar(&CARoot, "ca-root", "", "")
-	fs.IntVar(&QoS, "qos", 0, "")
-	fs.BoolVar(&Verbose, "verbose", false, "")
-	fs.Var(&Headers, "header", "")
+	_ = fs.String("config", "", "path to `file` containing configuration values (optional)")
+	fs.StringVar(&Broker, "broker", "", "broker address (should be in the form of a `URL`)")
+	fs.Var(&Topics, "topic", "topic to publish or subscribe to\n(can be specified multiple times)")
+	fs.StringVar(&ClientID, "client-id", "", "unique identifier for this client")
+	fs.StringVar(&Username, "username", "", "authenticate with a username")
+	fs.StringVar(&Password, "password", "", "authenticate with a password")
+	fs.StringVar(&CARoot, "ca-root", "", "path to a `file` containing CA certificates")
+	fs.IntVar(&QoS, "qos", 0, "quality of service for messages")
+	fs.BoolVar(&Verbose, "verbose", false, "increase output")
+	fs.Var(&Headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
 
 	return fs
 }
