@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	fs := mqttcli.NewFlagSet("sub", flag.ExitOnError)
+	fs := mqttcli.NewFlagSet("pub", flag.ExitOnError)
 
 	var message = fs.String("message", "", "")
 	var retained = fs.Bool("retained", false, "")
