@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -20,9 +21,9 @@ func main() {
 		log.Fatalf("failed parse: %v", err)
 	}
 
-	if mqttcli.Broker == "" || mqttcli.Topic == "" {
-		fs.Usage()
-		os.Exit(0)
+	if mqttcli.Broker == "" {
+		fmt.Println("missing required flag: -broker")
+		os.Exit(2)
 	}
 
 	logLevel, err := log.ParseLevel(mqttcli.LogLevel)
@@ -38,10 +39,12 @@ func main() {
 	opts := mqttcli.NewClientOptions()
 
 	opts.SetOnConnectHandler(func(c mqtt.Client) {
-		c.Subscribe(mqttcli.Topic, byte(mqttcli.QoS), func(c mqtt.Client, m mqtt.Message) {
-			log.Printf("[%v] %v", m.Topic(), string(m.Payload()))
-		})
-		log.Infof("subscribed: %v", mqttcli.Topic)
+		for _, topic := range mqttcli.Topics.Values {
+			c.Subscribe(topic, byte(mqttcli.QoS), func(c mqtt.Client, m mqtt.Message) {
+				log.Printf("[%v] %v", m.Topic(), string(m.Payload()))
+			})
+			log.Infof("subscribed: %v", topic)
+		}
 	})
 
 	client := mqtt.NewClient(opts)

@@ -3,11 +3,13 @@ package mqttcli
 import (
 	"flag"
 	"net/http"
+
+	"github.com/sgreben/flagvar"
 )
 
 var (
 	Broker   string
-	Topic    string
+	Topics   flagvar.Strings
 	ClientID string
 	Username string
 	Password string
@@ -22,7 +24,7 @@ func NewFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 
 	_ = fs.String("config", "", "")
 	fs.StringVar(&Broker, "broker", "", "")
-	fs.StringVar(&Topic, "topic", "", "")
+	fs.Var(&Topics, "topic", "")
 	fs.StringVar(&ClientID, "client-id", "", "")
 	fs.StringVar(&Username, "username", "", "")
 	fs.StringVar(&Password, "password", "", "")

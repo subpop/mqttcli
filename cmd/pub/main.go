@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"time"
 
@@ -21,6 +22,11 @@ func main() {
 		log.Fatalf("failed parse: %v", err)
 	}
 
+	if mqttcli.Broker == "" {
+		fmt.Println("missing required flag: -broker")
+		os.Exit(2)
+	}
+
 	logLevel, err := log.ParseLevel(mqttcli.LogLevel)
 	if err != nil {
 		log.Fatalf("cannot parse log level: %v", err)
@@ -29,11 +35,6 @@ func main() {
 
 	if log.CurrentLevel() >= log.LevelDebug {
 		mqtt.DEBUG = log.New(os.Stderr, "[DEBUG] ", log.Flags(), log.CurrentLevel())
-	}
-
-	if mqttcli.Broker == "" || mqttcli.Topic == "" || *message == "" {
-		fs.Usage()
-		os.Exit(0)
 	}
 
 	opts := mqttcli.NewClientOptions()
@@ -45,9 +46,11 @@ func main() {
 	}
 	log.Infof("connected: %v", mqttcli.Broker)
 
-	token := client.Publish(mqttcli.Topic, byte(mqttcli.QoS), *retained, *message)
-	if token.Wait() && token.Error() != nil {
-		log.Fatalf("publish failed: %v", token.Error())
+	for _, topic := range mqttcli.Topics.Values {
+		token := client.Publish(topic, byte(mqttcli.QoS), *retained, *message)
+		if token.Wait() && token.Error() != nil {
+			log.Fatalf("publish failed: %v", token.Error())
+		}
+		log.Infof("published: [%v] %v", topic, *message)
 	}
-	log.Infof("published: [%v] %v", mqttcli.Topic, *message)
 }
