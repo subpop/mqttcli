@@ -2,7 +2,6 @@ package mqttcli
 
 import (
 	"flag"
-	"net/http"
 
 	"github.com/sgreben/flagvar"
 )
@@ -16,8 +15,8 @@ var (
 	CARoot   string
 	QoS      int
 	LogLevel string
+	Headers  flagvar.AssignmentsMap
 )
-var Headers = http.Header{}
 
 func NewFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 	fs := flag.NewFlagSet(name, errorHandling)
@@ -31,7 +30,7 @@ func NewFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 	fs.StringVar(&CARoot, "ca-root", "", "")
 	fs.IntVar(&QoS, "qos", 0, "")
 	fs.StringVar(&LogLevel, "log-level", "error", "")
-	fs.Var(&HeadersValue{Headers: Headers}, "headers", "")
+	fs.Var(&Headers, "header", "")
 
 	return fs
 }

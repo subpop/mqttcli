@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"io/ioutil"
 	"log"
+	"net/http"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
@@ -15,7 +16,12 @@ func NewClientOptions() *mqtt.ClientOptions {
 	opts.SetClientID(ClientID)
 	opts.SetUsername(Username)
 	opts.SetPassword(Password)
-	opts.SetHTTPHeaders(Headers)
+
+	headers := make(http.Header)
+	for k, v := range Headers.Values {
+		headers.Add(k, v)
+	}
+	opts.SetHTTPHeaders(headers)
 
 	if CARoot != "" {
 		tlsConfig := &tls.Config{}
