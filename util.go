@@ -1,4 +1,4 @@
-package mqttcli
+package main
 
 import (
 	"math/rand"
@@ -9,7 +9,7 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-func RandomString(n int) string {
+func randomString(n int) string {
 	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	data := make([]byte, n)
 	for i := range data {
