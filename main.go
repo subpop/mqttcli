@@ -42,9 +42,14 @@ func main() {
 		retained bool
 	)
 
+	hostname, err := os.Hostname()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	rootFs.StringVar(&broker, "broker", "", "broker address (should be in the form of a `URL`)")
 	rootFs.Var(&topics, "topic", "topic to publish or subscribe to\n(can be specified multiple times)")
-	rootFs.StringVar(&clientID, "client-id", "", "unique identifier for this client")
+	rootFs.StringVar(&clientID, "client-id", hostname+"-"+randomString(6), "unique identifier for this client")
 	rootFs.StringVar(&username, "username", "", "authenticate with a username")
 	rootFs.StringVar(&password, "password", "", "authenticate with a password")
 	rootFs.StringVar(&caRoot, "ca-root", "", "path to a `file` containing CA certificates")
