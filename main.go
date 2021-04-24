@@ -56,8 +56,10 @@ func main() {
 	pubFs.BoolVar(&retained, "retained", false, "retain message on the broker")
 
 	pub := &ffcli.Command{
-		Name:    "pub",
-		FlagSet: pubFs,
+		Name:       "pub",
+		ShortUsage: "mqttcli [global flags] pub [flags]",
+		ShortHelp:  "Publish a message to the broker.",
+		FlagSet:    pubFs,
 		Exec: func(ctx context.Context, args []string) error {
 			client := mqtt.NewClient(opts)
 			if token := client.Connect(); token.WaitTimeout(30*time.Second) && token.Error() != nil {
@@ -77,8 +79,10 @@ func main() {
 		},
 	}
 	sub := &ffcli.Command{
-		Name:    "sub",
-		FlagSet: subFs,
+		Name:       "sub",
+		ShortUsage: "mqttcli [global flags] sub",
+		ShortHelp:  "Subscribe to topics on the broker.",
+		FlagSet:    subFs,
 		Exec: func(ctx context.Context, args []string) error {
 			opts.SetOnConnectHandler(func(c mqtt.Client) {
 				for _, topic := range topics.Values {
@@ -105,7 +109,7 @@ func main() {
 	}
 
 	root := &ffcli.Command{
-		ShortUsage:  "mqttcli [flags] <subcommand>",
+		ShortUsage:  "mqttcli [global flags] <subcommand>",
 		FlagSet:     rootFs,
 		Options:     []ff.Option{ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser)},
 		Subcommands: []*ffcli.Command{pub, sub},
