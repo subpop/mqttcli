@@ -19,43 +19,51 @@ import (
 	"github.com/sgreben/flagvar"
 )
 
-func main() {
+var (
+	broker   string
+	topics   flagvar.Strings
+	clientID string
+	username string
+	password string
+	caRoot   string
+	qos      int
+	verbose  bool
+	headers  flagvar.AssignmentsMap
 
-	var (
-		rootFs = flag.NewFlagSet("mqttcli", flag.ExitOnError)
-		pubFs  = flag.NewFlagSet("mqtt pub", flag.ExitOnError)
-		subFs  = flag.NewFlagSet("mqtt sub", flag.ExitOnError)
-		opts   = mqtt.NewClientOptions()
+	message  string
+	retained bool
+)
 
-		_        = rootFs.String("config", "", "path to `file` containing configuration values (optional)")
-		broker   string
-		topics   flagvar.Strings
-		clientID string
-		username string
-		password string
-		caRoot   string
-		qos      int
-		verbose  bool
-		headers  flagvar.AssignmentsMap
-
-		message  string
-		retained bool
-	)
-
+func globalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet {
 	hostname, err := os.Hostname()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	rootFs.StringVar(&broker, "broker", "", "broker address (should be in the form of a `URL`)")
-	rootFs.Var(&topics, "topic", "topic to publish or subscribe to\n(can be specified multiple times)")
-	rootFs.StringVar(&clientID, "client-id", hostname+"-"+randomString(6), "unique identifier for this client")
-	rootFs.StringVar(&username, "username", "", "authenticate with a username")
-	rootFs.StringVar(&password, "password", "", "authenticate with a password")
-	rootFs.StringVar(&caRoot, "ca-root", "", "path to a `file` containing CA certificates")
-	rootFs.IntVar(&qos, "qos", 0, "quality of service for messages")
-	rootFs.BoolVar(&verbose, "verbose", false, "increase output")
-	rootFs.Var(&headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
+	fs := flag.NewFlagSet(name, errorHandling)
+	fs.StringVar(&broker, "broker", "", "broker address (should be in the form of a `URL`)")
+	fs.Var(&topics, "topic", "topic to publish or subscribe to\n(can be specified multiple times)")
+	fs.StringVar(&clientID, "client-id", hostname+"-"+randomString(6), "unique identifier for this client")
+	fs.StringVar(&username, "username", "", "authenticate with a username")
+	fs.StringVar(&password, "password", "", "authenticate with a password")
+	fs.StringVar(&caRoot, "ca-root", "", "path to a `file` containing CA certificates")
+	fs.IntVar(&qos, "qos", 0, "quality of service for messages")
+	fs.BoolVar(&verbose, "verbose", false, "increase output")
+	fs.Var(&headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
+
+	return fs
+}
+
+func main() {
+
+	var (
+		rootFs = globalFlagSet("mqttcli", flag.ExitOnError)
+		pubFs  = globalFlagSet("mqttcli pub", flag.ExitOnError)
+		subFs  = globalFlagSet("mqttcli sub", flag.ExitOnError)
+		opts   = mqtt.NewClientOptions()
+
+		_ = rootFs.String("config", "", "path to `file` containing configuration values (optional)")
+	)
 
 	pubFs.StringVar(&message, "message", "", "message payload")
 	pubFs.BoolVar(&retained, "retained", false, "retain message on the broker")
