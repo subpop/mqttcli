@@ -16,6 +16,8 @@ import (
 func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 	opts := mqtt.NewClientOptions()
 
+	opts.SetOrderMatters(false)
+
 	opts.AddBroker(Broker)
 	opts.SetClientID(ClientID)
 	opts.SetUsername(Username)
