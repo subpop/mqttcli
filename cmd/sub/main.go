@@ -34,6 +34,13 @@ func main() {
 		}
 	})
 
+	opts.SetReconnectingHandler(func(c mqtt.Client, co *mqtt.ClientOptions) {
+		log.Printf("client disconnected")
+		if co.AutoReconnect {
+			log.Printf("reconnecting")
+		}
+	})
+
 	c := mqtt.NewClient(opts)
 	if token := c.Connect(); token.WaitTimeout(30*time.Second) && token.Error() != nil {
 		log.Fatalf("connect failed: %v", token.Error())
