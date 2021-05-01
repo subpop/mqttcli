@@ -9,8 +9,8 @@ flags that can be provided as a config file.
 
 ### Flags ###
 
-* `go run ./ -broker tcp://test.mosquitto.org:1883 -topic mqttcli/test sub`
-* `go run ./ -broker tcp://test.mosquitto.org:1883 -topic mqttcli/test pub -message "hello"`
+* `go run ./cmd/sub -broker tcp://test.mosquitto.org:1883 -topic mqttcli/test`
+* `echo hello | go run ./cmd/pub -broker tcp://test.mosquitto.org:1883 -topic mqttcli/test`
 
 ### Config File ###
 
@@ -19,7 +19,7 @@ cat > sub.cfg << EOF
 broker tcp://test.mosquitto.org:1883
 topic mqttcli/test
 EOF
-go run ./ -config sub.cfg
+go run ./cmd/sub -config sub.cfg
 ```
 
 ```
@@ -27,5 +27,5 @@ cat > pub.cfg << EOF
 broker tcp://test.mosquitto.org:1883
 topic mqttcli/test
 EOF
-go run ./ -config sub.cfg pub -message test
+echo hello | go run ./cmd/pub -config pub.cfg
 ```
