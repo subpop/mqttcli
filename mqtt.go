@@ -20,6 +20,7 @@ func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 	opts.SetClientID(ClientID)
 	opts.SetUsername(Username)
 	opts.SetPassword(Password)
+	opts.SetCleanSession(Clean)
 
 	h := make(http.Header)
 	for k, v := range Headers.Values {

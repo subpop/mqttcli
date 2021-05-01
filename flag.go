@@ -18,6 +18,7 @@ var (
 	CARoot   string
 	QoS      int
 	Verbose  bool
+	Clean    bool
 	Headers  flagvar.AssignmentsMap
 )
 
@@ -43,6 +44,7 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.StringVar(&CARoot, "ca-root", "", "path to a `file` containing CA certificates")
 	fs.IntVar(&QoS, "qos", 0, "quality of service for messages")
 	fs.BoolVar(&Verbose, "verbose", false, "increase output")
+	fs.BoolVar(&Clean, "clean", false, "discard any pending messages from the broker")
 	fs.Var(&Headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
 
 	return fs
