@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -22,7 +22,7 @@ func main() {
 
 	ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser))
 
-	message, err := io.ReadAll(os.Stdin)
+	message, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatalf("failed to read message: %v", err)
 	}
