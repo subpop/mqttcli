@@ -20,6 +20,8 @@ var (
 	Verbose  bool
 	Clean    bool
 	Headers  flagvar.AssignmentsMap
+	CertFile flagvar.File
+	KeyFile  flagvar.File
 )
 
 // GlobalFlagSet returns a new flag set configured with flags common to publish
@@ -46,6 +48,8 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.BoolVar(&Verbose, "verbose", false, "increase output")
 	fs.BoolVar(&Clean, "clean", true, "discard any pending messages from the broker")
 	fs.Var(&Headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
+	fs.Var(&CertFile, "cert-file", "authenticate with a certificate")
+	fs.Var(&KeyFile, "key-file", "authenticate with a private key")
 
 	return fs
 }
