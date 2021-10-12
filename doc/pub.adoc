@@ -1,0 +1,74 @@
+= pub(1)
+:Author: Link Dupont
+:Email: link@sub-pop.net
+
+== NAME
+pub - publishes a message to an MQTT topic
+
+== SYNOPSIS
+*pub* [_OPTIONS_]
+
+== DESCRIPTION
+*pub* connects to the given MQTT broker and publishes stdin to the specified
+topic.
+
+All options can be passed either as command-line arguments or can be specified
+in a simple config file.
+
+== OPTIONS
+*-broker* _URL_::
+    broker address (should be in the form of a _URL_)
+
+*-ca-root* _FILE_::
+    path to a _FILE_ containing CA certificates (optional)
+
+*-cert-file* _FILE_::
+    authenticate with a certificate
+
+*-clean*::
+    discard any pending messages from the broker (default true)
+
+*-client-id* _STRING_::
+    unique identifier for this client (defaults to a semi-random string)
+
+*-config* _FILE_::
+    path to _FILE_ containing configuration values (optional)
+
+*-header* _KEY=VALUE_::
+    set an HTTP header (in _KEY=VALUE_ form) (can be specified multiple times)
+
+*-key-file* _FILE_::
+    authenticate with a private key
+
+*-password* _STRING_::
+    authenticate with a password
+
+*-qos* _INTEGER_::
+    quality of service for messages
+
+*-retained*::
+    retain message on the broker
+
+*-topic* _STRING_::
+    topic to publish or subscribe to (can be specified multiple times)
+
+*-username* _STRING_::
+    authenticate with a username
+
+*-verbose*::
+    increase output
+
+== CONFIGURATION
+Any option may be specified as a value in a configuration file instead of (or in
+addition to) a command-line option. Values present on the command-line take
+precedent over values in the configration file. Thus it is easy to create a base
+configration file that can be augmented easily at run time.
+
+The configuration file takes the form of a simple space-separated "option value"
+format (i.e. "broker tcp://test.mosquitto.org:1883").
+
+== EXAMPLES
+Publish a message to a topic anonymously.
+----
+echo "hello" | pub -broker tcp://test.mosquitto.org:1883 -topic mqttcli/pubtest
+----
