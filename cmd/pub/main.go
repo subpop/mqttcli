@@ -20,7 +20,9 @@ func main() {
 	_ = fs.String("config", "", "path to `file` containing configuration values (optional)")
 	fs.BoolVar(&retained, "retained", false, "retain message on the broker")
 
-	ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser))
+	if err := ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser)); err != nil {
+		log.Fatalf("failed to parse flags: %v", err)
+	}
 
 	message, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {

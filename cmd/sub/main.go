@@ -18,7 +18,9 @@ func main() {
 
 	_ = fs.String("config", "", "path to `file` containing configuration values (optional)")
 
-	ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser))
+	if err := ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser)); err != nil {
+		log.Fatalf("failed to parse flags: %v", err)
+	}
 
 	opts, err := mqttcli.NewMQTTClientOptions()
 	if err != nil {
