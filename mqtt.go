@@ -5,10 +5,18 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
+
+func init() {
+	if os.Getenv("MQTT_DEBUG") != "" {
+		mqtt.DEBUG = log.New(os.Stderr, "MQTT_DEBUG ", log.LstdFlags)
+	}
+}
 
 // NewMQTTClientOptions returns a MQTT client option structure, prepopulated
 // with values read from the flag variables. It is an error to call this
