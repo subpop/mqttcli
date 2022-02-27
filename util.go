@@ -10,7 +10,7 @@ func init() {
 }
 
 func randomString(n int) string {
-	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	const letters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	data := make([]byte, n)
 	for i := range data {
 		data[i] = letters[rand.Intn(len(letters))]
