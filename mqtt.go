@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -39,12 +38,12 @@ func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 	case CertFile.Value != "" && KeyFile.Value != "":
 		config := &tls.Config{}
 
-		certData, err := ioutil.ReadFile(CertFile.Value)
+		certData, err := os.ReadFile(CertFile.Value)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read cert-file: %w", err)
 		}
 
-		keyData, err := ioutil.ReadFile(KeyFile.Value)
+		keyData, err := os.ReadFile(KeyFile.Value)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read key-file: %w", err)
 		}
@@ -62,7 +61,7 @@ func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 				return nil, fmt.Errorf("cannot get system certificate pool: %w", err)
 			}
 
-			data, err := ioutil.ReadFile(CARoot)
+			data, err := os.ReadFile(CARoot)
 			if err != nil {
 				return nil, fmt.Errorf("cannot read file: %w", err)
 			}
