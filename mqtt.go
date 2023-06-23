@@ -28,6 +28,8 @@ func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 	opts.AddBroker(Broker)
 	opts.SetClientID(ClientID)
 	opts.SetCleanSession(Clean)
+	opts.SetConnectRetry(ConnectRetry)
+	opts.SetConnectRetryInterval(ConnectRetryInterval)
 
 	switch {
 	case Username != "" && Password != "" && CertFile.Value != "" && KeyFile.Value != "":

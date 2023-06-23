@@ -4,23 +4,26 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/sgreben/flagvar"
 )
 
 var (
-	Broker   string
-	Topics   flagvar.Strings
-	ClientID string
-	Username string
-	Password string
-	CARoot   string
-	QoS      int
-	Verbose  bool
-	Clean    bool
-	Headers  flagvar.AssignmentsMap
-	CertFile flagvar.File
-	KeyFile  flagvar.File
+	Broker               string
+	Topics               flagvar.Strings
+	ClientID             string
+	Username             string
+	Password             string
+	CARoot               string
+	QoS                  int
+	Verbose              bool
+	Clean                bool
+	Headers              flagvar.AssignmentsMap
+	CertFile             flagvar.File
+	KeyFile              flagvar.File
+	ConnectRetry         bool
+	ConnectRetryInterval time.Duration
 )
 
 // GlobalFlagSet returns a new flag set configured with flags common to publish
@@ -44,6 +47,8 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.Var(&Headers, "header", "set an HTTP header (in `KEY=VALUE` form)\n(can be specified multiple times)")
 	fs.Var(&CertFile, "cert-file", "authenticate with a certificate")
 	fs.Var(&KeyFile, "key-file", "authenticate with a private key")
+	fs.BoolVar(&ConnectRetry, "connect-retry", false, "automatically retry initial connection to broker")
+	fs.DurationVar(&ConnectRetryInterval, "connect-retry-interval", 30*time.Second, "wait `DURATION` between initial connection attempts")
 
 	return fs
 }
