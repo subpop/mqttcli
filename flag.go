@@ -24,6 +24,7 @@ var (
 	KeyFile              flagvar.File
 	ConnectRetry         bool
 	ConnectRetryInterval time.Duration
+	AutoReconnect        bool
 )
 
 // GlobalFlagSet returns a new flag set configured with flags common to publish
@@ -49,6 +50,7 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.Var(&KeyFile, "key-file", "authenticate with a private key")
 	fs.BoolVar(&ConnectRetry, "connect-retry", false, "automatically retry initial connection to broker")
 	fs.DurationVar(&ConnectRetryInterval, "connect-retry-interval", 30*time.Second, "wait `DURATION` between initial connection attempts")
+	fs.BoolVar(&AutoReconnect, "auto-reconnect", false, "automatically reconnect when connection is lost")
 
 	return fs
 }
