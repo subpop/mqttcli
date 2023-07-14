@@ -28,7 +28,7 @@ var (
 	PrintVersion         bool
 )
 
-const Version = "0.2.3"
+const Version = "0.2.4"
 
 // GlobalFlagSet returns a new flag set configured with flags common to publish
 // and subscribe clients.
