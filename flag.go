@@ -25,7 +25,10 @@ var (
 	ConnectRetry         bool
 	ConnectRetryInterval time.Duration
 	AutoReconnect        bool
+	PrintVersion         bool
 )
+
+const Version = "0.2.3"
 
 // GlobalFlagSet returns a new flag set configured with flags common to publish
 // and subscribe clients.
@@ -51,6 +54,7 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.BoolVar(&ConnectRetry, "connect-retry", false, "automatically retry initial connection to broker")
 	fs.DurationVar(&ConnectRetryInterval, "connect-retry-interval", 30*time.Second, "wait `DURATION` between initial connection attempts")
 	fs.BoolVar(&AutoReconnect, "auto-reconnect", false, "automatically reconnect when connection is lost")
+	fs.BoolVar(&PrintVersion, "version", false, "print version")
 
 	return fs
 }

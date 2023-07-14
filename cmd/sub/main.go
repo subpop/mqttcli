@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -20,6 +21,11 @@ func main() {
 
 	if err := ff.Parse(fs, os.Args[1:], ff.WithConfigFileFlag("config"), ff.WithConfigFileParser(ff.PlainParser)); err != nil {
 		log.Fatalf("failed to parse flags: %v", err)
+	}
+
+	if mqttcli.PrintVersion {
+		fmt.Println(mqttcli.Version)
+		os.Exit(0)
 	}
 
 	opts, err := mqttcli.NewMQTTClientOptions()
