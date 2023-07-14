@@ -17,6 +17,9 @@ All options can be passed either as command-line arguments or can be specified
 in a simple config file.
 
 == OPTIONS
+*-auto-reconnect*::
+    automatically reconnect when connection is lost
+
 *-broker* _URL_::
     broker address (should be in the form of a _URL_)
 
@@ -31,6 +34,12 @@ in a simple config file.
 
 *-client-id* _STRING_::
     unique identifier for this client (defaults to a semi-random string)
+
+*-connect-retry*::
+    automatically retry initial connection to broker
+
+*-connect-retry-interval* _DURATION_::
+    wait _DURATION_ between initial connection attempts (default 30s)
 
 *-config* _FILE_::
     path to _FILE_ containing configuration values (optional)
@@ -55,6 +64,9 @@ in a simple config file.
 
 *-verbose*::
     increase output
+
+*-version*::
+    print version
 
 == CONFIGURATION
 Any option may be specified as a value in a configuration file instead of (or in
