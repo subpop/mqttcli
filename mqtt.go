@@ -73,6 +73,8 @@ func NewMQTTClientOptions() (*mqtt.ClientOptions, error) {
 			config.RootCAs = pool
 		}
 
+		config.NextProtos = TLSALPN.Values
+
 		opts.SetTLSConfig(config)
 	default:
 		if Username != "" && Password == "" {

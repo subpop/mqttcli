@@ -26,6 +26,7 @@ var (
 	ConnectRetryInterval time.Duration
 	AutoReconnect        bool
 	PrintVersion         bool
+	TLSALPN              flagvar.Strings
 )
 
 const Version = "0.2.4"
@@ -55,6 +56,7 @@ func GlobalFlagSet(name string, errorHandling flag.ErrorHandling) *flag.FlagSet 
 	fs.DurationVar(&ConnectRetryInterval, "connect-retry-interval", 30*time.Second, "wait `DURATION` between initial connection attempts")
 	fs.BoolVar(&AutoReconnect, "auto-reconnect", false, "automatically reconnect when connection is lost")
 	fs.BoolVar(&PrintVersion, "version", false, "print version")
+	fs.Var(&TLSALPN, "tls-alpn", "ALPN value to include in the TLS handshake\n(can be specified multiple times)")
 
 	return fs
 }
