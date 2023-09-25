@@ -58,6 +58,9 @@ in a simple config file.
 *-retained*::
     retain message on the broker
 
+*-tls-alpn* _STRING_::
+    ALPN value to include in the TLS handshake (can be specified multiple times)
+
 *-topic* _STRING_::
     topic to publish or subscribe to (can be specified multiple times)
 
