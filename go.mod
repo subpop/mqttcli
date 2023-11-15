@@ -1,4 +1,4 @@
-module git.sr.ht/~spc/mqttcli
+module github.com/subpop/mqttcli
 
 go 1.16
 

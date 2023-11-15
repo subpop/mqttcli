@@ -8,9 +8,9 @@ import (
 	"os"
 	"time"
 
-	"git.sr.ht/~spc/mqttcli"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/peterbourgon/ff/v3"
+	"github.com/subpop/mqttcli"
 )
 
 var retained bool
