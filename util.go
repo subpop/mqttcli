@@ -2,12 +2,7 @@ package mqttcli
 
 import (
 	"math/rand"
-	"time"
 )
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
-}
 
 func randomString(n int) string {
 	const letters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
