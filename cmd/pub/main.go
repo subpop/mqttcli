@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"time"
@@ -30,7 +30,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	message, err := ioutil.ReadAll(os.Stdin)
+	message, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatalf("failed to read message: %v", err)
 	}
