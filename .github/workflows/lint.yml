@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
     - uses: aevea/commitsar@v0.20.2
   lint-code:
     runs-on: ubuntu-latest
