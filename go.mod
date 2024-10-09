@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/eclipse/paho.mqtt.golang v1.5.0
 	github.com/peterbourgon/ff/v3 v3.4.0
-	github.com/sgreben/flagvar v1.10.1
+	github.com/sgreben/flagvar v1.10.2
 )
 
 require (
