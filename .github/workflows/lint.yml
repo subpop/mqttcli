@@ -1,29 +1,35 @@
 name: Lint
 
 on:
-    pull_request:
-    workflow_dispatch:
-  
+  pull_request:
+  workflow_dispatch:
+
 jobs:
   lint-commits:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - uses: aevea/commitsar@v0.20.2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: go mod download
+      - name: Run commitsar
+        uses: aevea/commitsar@v0.20.2
   lint-code:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: golangci/golangci-lint-action@v6.1.1
-      with:
-        version: latest
-        args: --verbose --timeout=3m
+      - uses: actions/checkout@v4
+      - uses: golangci/golangci-lint-action@v6.1.1
   lint-language:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: get-woke/woke-action@v0
-      with:
-        fail-on-error: true
+      - uses: actions/checkout@v4
+      - uses: get-woke/woke-action@v0
+        with:
+          fail-on-error: true
